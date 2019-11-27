@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         interBusButton.setOnClickListener(this);
         cityBusButton.setOnClickListener(this);
         cityBusButton.setVisibility(View.GONE);
+        int SSibal =  18;
     }
 
     @Override
