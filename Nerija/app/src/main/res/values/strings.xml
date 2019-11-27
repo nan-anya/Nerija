@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Nerija</string>
+    <string name="train">기차</string>
+    <string name="intercityBus">시외버스</string>
+    <string name="cityBus">시내버스</string>
+    <string name="back">뒤로가기</string>
+    <string name="startingPoint">출발지</string>
+    <string name="endPoint">도착지</string>
+    <string name="calender">캘린더</string>
+    <string name="confirm">확인</string>
+    <string name="startingLocationSelect">출발 지역 선택</string>
+    <string name="endLocationSelect">도착 지역 선택</string>
+    <string name="startTerminal">출발 터미널</string>
+    <string name="endTerminal">도착 터미널</string>
+</resources>

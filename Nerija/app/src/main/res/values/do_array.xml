@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="location_array">
+
+        <item>지역 선택</item>
+        <item>강원</item>
+        <item>광주전남</item>
+        <item>대구경북</item>
+        <item>대전세종</item>
+        <item>부산경남</item>
+        <item>서울</item>
+        <item>인천경기</item>
+        <item>전북</item>
+        <item>충북</item>
+        <item>충남</item>
+    </string-array>
+
+</resources>
