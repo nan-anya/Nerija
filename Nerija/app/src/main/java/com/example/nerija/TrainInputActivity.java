@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +19,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -100,16 +103,36 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                 datePickerDialog.show();
                 break;
             case R.id.trainOKButton:
-                InputManager temp = TAS.getInputManager();
-                Intent listIntent = new Intent(getApplicationContext(),ListActivity.class);
-                listIntent.putExtra("IM",temp);
-                listIntent.putExtra("searchMode",1);
-                Log.d("으악",temp.getArrivalPlace()+" "+temp.getDepartPlace() + temp.getDate());
-                startActivity(listIntent);
+                InputManager inputManager = TAS.getInputManager();
+                Date selectedDate = inputManager.getDate();//선택한 시간
+                Date currentDate =  new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                if(date == null)
+                {
+                    Toast.makeText(this,"날짜를 선택해주세요.",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    String selectedDateString = format.format(selectedDate);
+                    String currentDateString = format.format(currentDate);
+                    int result = selectedDateString.compareTo(currentDateString);
+                    Log.d("확인",selectedDateString+" "+currentDateString);
+                    if(result<0)
+                    {
+                        Toast.makeText(this,"선택한 날짜가 과거입니다.",Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        InputManager temp = TAS.getInputManager();
+                        Intent listIntent = new Intent(getApplicationContext(),ListActivity.class);
+                        listIntent.putExtra("IM",temp);
+                        listIntent.putExtra("searchMode",1);
+                        startActivity(listIntent);
+                    }
+                }
                 break;
         }
     }
-
 
     public void setDataList(HashMap<String,String> dataSet) throws IOException {
         ArrayList<String> dataList = new ArrayList<>();

@@ -15,7 +15,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.StringTokenizer;
 
 public class SearchManager extends Thread
 {
@@ -72,15 +75,30 @@ public class SearchManager extends Thread
             JSONObject data;
             String depplantime;//출발시간
             String arrplantime;//도착시간
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
+            SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
+            String currentHour = hourFormat.format(cal.getTime());//현재 시
+            String currentMinute = minuteFormat.format(cal.getTime());//현재 분
+            int curH = Integer.parseInt(currentHour);
+            int curM = Integer.parseInt(currentMinute);
             for (int j = 0; j < parse_item.size(); j++) {
 
                 data = (JSONObject) parse_item.get(j);/*parse_item이라는 array에서 i번째 index에 존재하는 data를  받아오기*/
                 depplantime = data.get("depplandtime").toString();
                 arrplantime = data.get("arrplandtime").toString();
+                int depH = Integer.parseInt(depplantime.substring(8,10));
+                int depM = Integer.parseInt(depplantime.substring(10,12));
                 //시,분,초로 고치기 두개 스트링 붙이기 (출발시간~ 도착시간)
-                time.add(editDate(depplantime,arrplantime));
+                if(curH<depH)
+                {
+                    time.add(editDate(depplantime,arrplantime));
+                }
+                else if(curH==depH && curM < depM)
+                {
+                    time.add(editDate(depplantime,arrplantime));
+                }
             }
-
             rd.close();
             conn.disconnect();
 

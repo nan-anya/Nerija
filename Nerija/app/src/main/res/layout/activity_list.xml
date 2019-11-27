@@ -9,4 +9,11 @@
         android:layout_height="0dp"
         android:layout_weight="5"/>
 
+    <Button
+        android:id="@+id/listBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:visibility="gone" />
+
 </LinearLayout>

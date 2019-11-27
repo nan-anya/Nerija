@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class IntercityInputActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
+public class IntercityInputActivity extends AppCompatActivity implements View.OnClickListener
 {
     String date;
     TransportAlarmSystem TAS = new TransportAlarmSystem();
@@ -24,20 +24,13 @@ public class IntercityInputActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_intercity);
-        String[] locationData = getResources().getStringArray(R.array.location_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,locationData);
-        Spinner startSpinner = findViewById(R.id.startDoPopUp);
-        Spinner endSpinner = findViewById(R.id.endDoPopUp);
         Button backButton = findViewById(R.id.intercityBackButton);
         Button OKButton = findViewById(R.id.intercityOKButton);
         Button calender = findViewById(R.id.calenderPopUp);
         backButton.setOnClickListener(this);
         OKButton.setOnClickListener(this);
         calender.setOnClickListener(this);
-        startSpinner.setAdapter(adapter);
-        endSpinner.setAdapter(adapter);
-        startSpinner.setOnItemSelectedListener(this);
-        endSpinner.setOnItemSelectedListener(this);
+
     }
 
 
@@ -69,34 +62,5 @@ public class IntercityInputActivity extends AppCompatActivity implements View.On
                 break;
         }
     }
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String location;
-        switch (view.getId())
-        {
-            case R.id.startDoPopUp:
-                Spinner startingSpinner = findViewById(R.id.startDoPopUp);
-                location = (String) startingSpinner.getItemAtPosition(position);
-                Log.d("이거는 되나1","음..");
-                if(!location.equals("지역 선택"))
-                {
 
-                }
-                break;
-            case R.id.endDoPopUp:
-                Spinner endSpinner = findViewById(R.id.endDoPopUp);
-                location = (String) endSpinner.getItemAtPosition(position);
-                Log.d("이거는 되나2","음..");
-                if(!location.equals("지역 선택"))
-                {
-
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }
