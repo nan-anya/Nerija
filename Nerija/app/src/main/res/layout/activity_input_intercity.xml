@@ -10,13 +10,17 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2.5"
-            android:orientation="vertical">
+            android:layout_weight="2"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -25,55 +29,81 @@
                 android:textSize="25dp"
                 android:gravity="center"/>
 
-            <Spinner
-                android:id="@+id/startDoPopUp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/startingLocationSelect"/>
 
-            <Spinner
-                android:id="@+id/startTerminalSelect"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/startDoPopUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/initiality"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:text="@string/endTerminal"
-                android:layout_weight="0.9"
-                android:textSize="25dp"
-                android:gravity="center"/>
+                <Spinner
+                    android:id="@+id/startTerminalSelect"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
-            <Spinner
-                android:id="@+id/endDoPopUp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/endLocationSelect"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
 
-            <Spinner
-                android:id="@+id/endTerminalSelect"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:text="@string/endTerminal"
+                    android:layout_weight="0.9"
+                    android:textSize="25dp"
+                    android:gravity="center"/>
+
+
+                <Button
+                    android:id="@+id/endDoPopUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/initiality"/>
+
+                <Spinner
+                    android:id="@+id/endTerminalSelect"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/calenderPopUp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
-        android:text="@string/calender"/>
+        android:layout_weight="1.5"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/date"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+        <Button
+            android:id="@+id/calenderPopUp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:text="@string/calender"/>
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="0.1">
         <Button
             android:id="@+id/intercityBackButton"
             android:layout_width="0dp"

@@ -35,10 +35,11 @@ public class IntercityInputActivity extends AppCompatActivity implements View.On
 
 
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId())
         {
             case R.id.intercityBackButton:
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
@@ -59,6 +60,7 @@ public class IntercityInputActivity extends AppCompatActivity implements View.On
                 datePickerDialog.show();
                 break;
             case R.id.intercityOKButton:
+                intent = new Intent(getApplicationContext(),ListActivity.class);
                 break;
         }
     }

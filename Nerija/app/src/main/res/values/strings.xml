@@ -12,4 +12,6 @@
     <string name="endLocationSelect">도착 지역 선택</string>
     <string name="startTerminal">출발 터미널</string>
     <string name="endTerminal">도착 터미널</string>
+    <string name="initiality">초성선택(ㄱ ~ ㅎ)</string>
+    <string name="date">날짜</string>
 </resources>
