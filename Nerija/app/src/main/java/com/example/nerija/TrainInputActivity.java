@@ -131,6 +131,13 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                     }
                 }
                 break;
+            case R.id.geontakButton:
+                Intent temp1 = new Intent(getApplicationContext(),geontakActivity.class);
+                startActivity(temp1);
+                break;
+            case R.id.namdoButton:
+                Intent temp2 = new Intent(getApplicationContext(),geontakActivity.class);
+                startActivity(temp2);
         }
     }
 
