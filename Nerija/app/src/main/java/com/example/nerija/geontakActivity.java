@@ -29,7 +29,7 @@ public class geontakActivity extends AppCompatActivity implements View.OnClickLi
 
         MM = new MessageManager(this);
 
-        LC = new LocationChecker(getApplicationContext(), this);
+        LC = new LocationChecker(this);
     }
 
     public void onClick(View v)
