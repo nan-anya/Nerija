@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,7 +51,12 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
         backButton.setOnClickListener(this);
         calenderPopUpButton.setOnClickListener(this);
         OKButton.setOnClickListener(this);
+<<<<<<< HEAD
+        Button namdoB = findViewById(R.id.namdoButton);
+        namdoB.setOnClickListener(this);
+=======
 
+>>>>>>> 5425a90685146ec66602d53fca411b56bc84f156
         try {
             setDataList(dataSet);
         } catch (IOException e) {
@@ -144,9 +150,17 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                 startActivity(temp1);
                 break;
             case R.id.namdoButton:
+<<<<<<< HEAD
+                Alarm alarm = new Alarm();
+                Intent temp2 = new Intent(getApplicationContext(),namdoActivity.class);
+                temp2.putExtra("alarm",alarm);
+                alarm.getDate(new Date());
+                alarm.ShowTimerMethod(getApplicationContext(),temp2);
+=======
                 Intent temp2 = new Intent(getApplicationContext(),namdoActivity.class);
                 startActivity(temp2);
                 break;
+>>>>>>> 5425a90685146ec66602d53fca411b56bc84f156
         }
     }
 
