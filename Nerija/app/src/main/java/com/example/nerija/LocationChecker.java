@@ -24,9 +24,9 @@ public class LocationChecker
 
     Activity activity;
 
-    public LocationChecker(Context context, Activity activity)
+    public LocationChecker(Activity activity)
     {
-        appContext = context;
+        appContext = activity.getApplicationContext();
 
         this.activity = activity;
 
