@@ -40,9 +40,17 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
         Button OKButton  = findViewById(R.id.trainOKButton);
         Spinner startSpinner = findViewById(R.id.departSpinner);
         Spinner endSpinner = findViewById(R.id.arrivalSpinner);
+
+        //임시 버튼임
+        Button takButton = findViewById(R.id.geontakButton);
+        takButton.setOnClickListener(this);
+
+        //
+
         backButton.setOnClickListener(this);
         calenderPopUpButton.setOnClickListener(this);
         OKButton.setOnClickListener(this);
+
         try {
             setDataList(dataSet);
         } catch (IOException e) {
@@ -136,8 +144,9 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                 startActivity(temp1);
                 break;
             case R.id.namdoButton:
-                Intent temp2 = new Intent(getApplicationContext(),geontakActivity.class);
+                Intent temp2 = new Intent(getApplicationContext(),namdoActivity.class);
                 startActivity(temp2);
+                break;
         }
     }
 
