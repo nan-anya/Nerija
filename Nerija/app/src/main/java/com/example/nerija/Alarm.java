@@ -1,5 +1,6 @@
 package com.example.nerija;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -41,8 +42,6 @@ public class Alarm extends Thread implements Serializable {
 
                     handler.sendEmptyMessage(1);    // 1초 후 handler 호출 즉, 시간 변경
                 }
-                toast.setText("알람 끝!!");
-                toast.show();
             }
         };
 

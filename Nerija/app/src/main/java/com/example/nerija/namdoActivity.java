@@ -1,5 +1,7 @@
 package com.example.nerija;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -24,7 +26,8 @@ public class namdoActivity extends AppCompatActivity
 
     }
     public void on1(View v){
+        ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(1);
         android.os.Process.killProcess(android.os.Process.myPid());
-    }
+}
 
 }
