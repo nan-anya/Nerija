@@ -2,6 +2,8 @@ package com.example.nerija;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -128,18 +130,26 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                     String selectedDateString = format.format(selectedDate);
                     String currentDateString = format.format(currentDate);
                     int result = selectedDateString.compareTo(currentDateString);
-                    Log.d("확인",selectedDateString+" "+currentDateString);
                     if(result<0)
                     {
                         Toast.makeText(this,"선택한 날짜가 과거입니다.",Toast.LENGTH_LONG).show();
                     }
                     else
                     {
-                        InputManager temp = TAS.getInputManager();
-                        Intent listIntent = new Intent(getApplicationContext(),ListActivity.class);
-                        listIntent.putExtra("IM",temp);
-                        listIntent.putExtra("searchMode",1);
-                        startActivity(listIntent);
+                        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
+                        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+                        if(networkInfo !=null)
+                        {
+                            InputManager temp = TAS.getInputManager();
+                            Intent listIntent = new Intent(getApplicationContext(),ListActivity.class);
+                            listIntent.putExtra("IM",temp);
+                            listIntent.putExtra("searchMode",1);
+                            startActivity(listIntent);
+                        }
+                        else
+                        {
+                            Toast.makeText(this,"네트워크 연결 상태를 확인해주세요",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 break;
