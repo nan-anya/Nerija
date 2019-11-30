@@ -1,11 +1,19 @@
 package com.example.nerija;
 
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,11 +23,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -158,11 +168,34 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                 startActivity(temp1);
                 break;
             case R.id.namdoButton:
-                Alarm alarm = new Alarm();
                 Intent temp2 = new Intent(getApplicationContext(),namdoActivity.class);
-                temp2.putExtra("alarm",alarm);
+                Alarm alarm = new Alarm();
                 alarm.getDate(new Date());
-                alarm.ShowTimerMethod(getApplicationContext(),temp2);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
+
+                builder.setSmallIcon(R.mipmap.ic_launcher);
+                builder.setContentTitle("알림 제목");
+                builder.setContentText("알람 세부 텍스트");
+
+                builder.setColor(Color.RED);
+                // 사용자가 탭을 클릭하면 자동 제거
+                builder.setAutoCancel(true);
+
+                // 알림 표시
+                NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    notificationManager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
+                }
+
+                // id값은
+                // 정의해야하는 각 알림의 고유한 int값
+                notificationManager.notify(1, builder.build());
+                alarm.StartAlarm(getApplicationContext(),temp2);
+                Toast.makeText(getApplicationContext(),"press",Toast.LENGTH_SHORT).show();
+
+
+
         }
     }
 
