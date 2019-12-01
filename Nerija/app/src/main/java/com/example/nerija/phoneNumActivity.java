@@ -75,10 +75,9 @@ public class phoneNumActivity extends AppCompatActivity {
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
 
-
                 Intent temp2 = new Intent(getApplicationContext(),namdoActivity.class);
+                temp2.putExtra("goto",alarmBaseData.departPlaceName);
                 Alarm alarm = new Alarm();
-                alarm.getDate(new Date());
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "default");
 
@@ -95,7 +94,7 @@ public class phoneNumActivity extends AppCompatActivity {
                 // id값은
                 // 정의해야하는 각 알림의 고유한 int값
                 notificationManager.notify(1, builder.build());
-                alarm.StartAlarm(getApplicationContext(),temp2);
+                alarm.StartAlarm(getApplicationContext(),temp2,alarmBaseData);
                 Toast.makeText(getApplicationContext(),"알람 등록",Toast.LENGTH_SHORT).show();
             }
         });
