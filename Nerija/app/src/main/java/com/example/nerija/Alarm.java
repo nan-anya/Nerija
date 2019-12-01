@@ -16,7 +16,7 @@ public class Alarm extends Thread implements Serializable {
     public Date alarm_date; // 알람을 울릴 시간 정보 저장;
 
 
-    public void StartAlarm(final Context app, final Intent intent){ // TextView는 화면에 띄워서 결과 확인하기 위한 선언; 나중에 제거하기
+    public void StartAlarm(final Context app, final Intent intent, final AlarmBaseData alarmBaseData){ // TextView는 화면에 띄워서 결과 확인하기 위한 선언; 나중에 제거하기
         final Toast toast = Toast.makeText(app.getApplicationContext(), "알람 쨘",Toast.LENGTH_SHORT);
         final Vibrator vib = (Vibrator) app.getSystemService(Context.VIBRATOR_SERVICE);
 
