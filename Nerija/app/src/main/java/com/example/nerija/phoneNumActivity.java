@@ -26,11 +26,11 @@ public class phoneNumActivity extends AppCompatActivity {
 
         final ListView list = findViewById(R.id.list);
 
-        final MessageManager MM = new MessageManager(this);
+        final AddressManager AM = new AddressManager(this);
 
-        ArrayList<NamePhoneNum> nps = MM.getNamePhoneNums();
+        ArrayList<NamePhoneNum> nps = AM.getNamePhoneNums();
 
-        ArrayList<String> npss = MM.getAddressesString();
+        ArrayList<String> npss = AM.getAddressesString();
 
         npss.remove(0);//자기 자신 번호 삭제
 
@@ -48,12 +48,23 @@ public class phoneNumActivity extends AppCompatActivity {
             {
                 String nameNum = String.valueOf(list.getItemAtPosition(position));
 
+                NamePhoneNum temp = new NamePhoneNum();
+
                 if (!nameNum.equals("주소록에 주소가 없습니다."))
                 {
-                    MM.setReceiver(nameNum);
+                    for(NamePhoneNum i : AM.getNamePhoneNums())
+                    {
+                        if(i.toString().equals(nameNum))
+                        {
+                            temp = i;
+                            break;
+                        }
+                    }
 
-                    alarmBaseData.setReciverName(MM.getReceiver().getName());
-                    alarmBaseData.setPhoneNum(MM.getReceiver().getPhoneNum());
+                    alarmBaseData.setReciverName(temp.getName());
+                    alarmBaseData.setPhoneNum(temp.getPhoneNum());
+
+
                 }
             }
         });
