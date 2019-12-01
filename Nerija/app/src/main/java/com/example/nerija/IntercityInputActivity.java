@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 public class IntercityInputActivity extends AppCompatActivity implements View.OnClickListener
 {
     String date;
-    TransportAlarmSystem TAS = new TransportAlarmSystem();
+    UserInputData userInputData = new UserInputData();
     HashMap<String,String> dataSet = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,7 @@ public class IntercityInputActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         date = (i + "-" + (i1+1) + "-" + i2);
-                        InputManager inputManager = TAS.getInputManager();
-                        inputManager.setDate(date);//데이터 삽입
+                        userInputData.setDate(date);//데이터 삽입
                     }
                 };
                 String year = String.valueOf(cal.get(Calendar.YEAR));

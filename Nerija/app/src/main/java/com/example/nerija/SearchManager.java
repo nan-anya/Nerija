@@ -75,7 +75,7 @@ public class SearchManager extends Thread
             String depplantime;//출발시간
             String arrplantime;//도착시간
             Calendar cal = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMDD");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
             SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
             SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
             String currentDate = dateFormat.format(cal.getTime());//현재 날짜
@@ -91,21 +91,25 @@ public class SearchManager extends Thread
                 depplantime = data.get("depplandtime").toString();
                 arrplantime = data.get("arrplandtime").toString();
                 int depD = Integer.parseInt(depplantime.substring(0, 8));
-                int depH = Integer.parseInt(depplantime.substring(8,10));
-                int depM = Integer.parseInt(depplantime.substring(10,12));
-                //시,분,초로 고치기 두개 스트링 붙이기 (출발시간~ 도착시간)
-                if(curD >= depD)
-                {
-                    if (curH < depH)
-                    {
-                        time.add(editDate(depplantime, arrplantime));
-                    }
+                int depH = Integer.parseInt(depplantime.substring(8, 10));
+                int depM = Integer.parseInt(depplantime.substring(10, 12));
 
-                    else if (curH == depH && curM < depM)
-                    {
-                        time.add(editDate(depplantime, arrplantime));
-                    }
+                Log.d("cur", Integer.toString(curD) + "-" + Integer.toString(curH) + "-" + Integer.toString(curM));
+                Log.d("dep", Integer.toString(depD) + "-" + Integer.toString(depH) + "-" + Integer.toString(depM));
+                //시,분,초로 고치기 두개 스트링 붙이기 (출발시간~ 도착시간)
+                if (curD < depD)
+                {
+                    time.add(editDate(depplantime, arrplantime));
                 }
+                else if (curH < depH)
+                {
+                    time.add(editDate(depplantime, arrplantime));
+                }
+                else if (curH == depH && curM < depM)
+                {
+                    time.add(editDate(depplantime, arrplantime));
+                }
+
             }
             rd.close();
             conn.disconnect();

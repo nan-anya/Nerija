@@ -1,5 +1,6 @@
 package com.example.nerija;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,18 +9,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ListActivity extends AppCompatActivity
 {
+
+    AlarmBaseData alarmBaseData;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -31,14 +33,19 @@ public class ListActivity extends AppCompatActivity
         ListView list = findViewById(R.id.list);
         int searchMode = 0;
         ArrayList<String> time = new ArrayList<>();
-        InputManager IM = (InputManager) intent.getSerializableExtra("IM");
-        depPlaceId = IM.getDepartPlace();
-        arrPlaceId = IM.getArrivalPlace();
-        depPlanDate = formatChange(IM.getDate());
+        final UserInputData userInputData = (UserInputData) intent.getSerializableExtra("userInputData");
+        depPlaceId = userInputData.getDepartPlaceID();
+        arrPlaceId = userInputData.getArrivalPlaceID();
+        depPlanDate = formatChange(userInputData.getDate());
         searchMode = intent.getIntExtra("searchMode",0);//1이면 기차, 2이면 시외버스
         SearchManager SM = new SearchManager(depPlaceId,arrPlaceId,depPlanDate,time,searchMode);
+
+
+
         SM.start();//쓰레드 실행
         while(!SM.isReady());//리스트 받아오는거 기다리는 중
+
+
         if(time.size()==0)
         {
             time.add("선택할 수 있는 시간표가 존재하지 않습니다.");
@@ -63,6 +70,8 @@ public class ListActivity extends AppCompatActivity
                 if(!time.equals("선택할 수 있는 시간표가 존재하지 않습니다."));
                 {
                     Date selectedDate = dateParsing(depPlanDate,time);
+                    alarmBaseData = new AlarmBaseData(selectedDate, userInputData.departPlaceName);
+                    askUseMessageService(alarmBaseData);
                 }
             }
         });
@@ -96,5 +105,34 @@ public class ListActivity extends AppCompatActivity
         return date;
     }
 
+    private void askUseMessageService(final AlarmBaseData alarmBaseData)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        builder.setTitle("메시지 발신").setMessage("알람이 울릴때 메시지 발신하도록 예약 하시겠습니까?");
+
+        builder.setPositiveButton("네", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int id)
+            {
+                Intent intent = new Intent(getApplicationContext(),phoneNumActivity.class);
+                intent.putExtra("alarmBaseData",alarmBaseData);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int id)
+            {
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
 }

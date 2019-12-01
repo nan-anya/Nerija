@@ -19,11 +19,12 @@ public class MessageManager
 {
     private boolean sendMessage;
     private String messageString;
-    private namePhoneNum receiver;
+    private NamePhoneNum receiver;
 
     private Context appContext;
     private Activity activity;
 
+    private ArrayList<NamePhoneNum> namePhoneNums;
 
     public MessageManager(Activity ac)
     {
@@ -39,21 +40,23 @@ public class MessageManager
         {
             ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.SEND_SMS}, 0);
         }
+
+        makePhoneNumList();
     }
 
-    void makeMessage(String arrival)
+    public void makeMessage(String arrival)
     {
-        messageString = "[<내리자>에서 발신]\n" +receiver.getName() +"님 지금 "  + arrival + "근처에 도착 했습니다." ;
+        messageString = "[<내리자>에서 발신]\n" +receiver.getName() +"님! 지금 "  + arrival + "근처에 도착 했습니다." ;
     }
 
-    public ArrayList<namePhoneNum> getAddresses()
+    private void makePhoneNumList()
     {
-        ArrayList<namePhoneNum> dataList = new ArrayList<namePhoneNum>();
+        namePhoneNums = new ArrayList<NamePhoneNum>();
         Cursor c = appContext.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " asc");
 
         while (c.moveToNext())
         {
-            namePhoneNum temp = new namePhoneNum();
+            NamePhoneNum temp = new NamePhoneNum();
 
             String id = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
 
@@ -65,15 +68,25 @@ public class MessageManager
             if (phoneCursor.moveToFirst())
             {
                 String number = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                temp.setName(number);
+                temp.setPhoneNum(number);
             }
 
             phoneCursor.close();
-            dataList.add(temp);
+            namePhoneNums.add(temp);
         }
         c.close();
+    }
 
-        return dataList;
+    public  ArrayList<String> getAddressesString()
+    {
+        ArrayList<String> output = new ArrayList<String>();
+
+        for (NamePhoneNum i : namePhoneNums)
+        {
+            output.add(i.toString());
+        }
+
+        return output;
     }
 
     public void transmitMessage(String phoneNum)
@@ -92,29 +105,44 @@ public class MessageManager
         }
     }
 
-    public namePhoneNum getReceiver() {
+    public ArrayList<NamePhoneNum> getNamePhoneNums()
+    {
+        return namePhoneNums;
+    }
+    public NamePhoneNum getReceiver() {
         return receiver;
     }
-    public void setReceiver(namePhoneNum receiver) {
+    public void setReceiver(NamePhoneNum receiver) {
         this.receiver = receiver;
+    }
+    public void setReceiver(String namePhoneNum)
+    {
+        for(NamePhoneNum i : namePhoneNums)
+        {
+            if(i.toString().equals(namePhoneNum))
+            {
+                receiver = i;
+                break;
+            }
+        }
     }
     public String getMessageString() {
         return messageString;
     }
 }
 
-class namePhoneNum
+class NamePhoneNum
 {
     private String name;
     private String phoneNum;
 
-    public namePhoneNum(String name, String phoneNum)
+    public NamePhoneNum(String name, String phoneNum)
     {
         this.name = name;
         this.phoneNum = phoneNum;
     }
 
-    public namePhoneNum()
+    public NamePhoneNum()
     {
     }
 
@@ -133,5 +161,10 @@ class namePhoneNum
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public  String toString()
+    {
+        return name + " : " + phoneNum;
     }
 }

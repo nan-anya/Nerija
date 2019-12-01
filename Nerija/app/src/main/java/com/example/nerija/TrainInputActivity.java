@@ -1,15 +1,11 @@
 package com.example.nerija;
 
 import android.app.DatePickerDialog;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -29,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +37,9 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
 {
     String date;
     HashMap<String,String> dataSet = new HashMap<>();
-    TransportAlarmSystem TAS = new TransportAlarmSystem();
+
+    UserInputData userInputData = new UserInputData();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_train);
@@ -53,19 +50,16 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
         Spinner startSpinner = findViewById(R.id.departSpinner);
         Spinner endSpinner = findViewById(R.id.arrivalSpinner);
 
-        //임시 버튼임
-        Button takButton = findViewById(R.id.geontakButton);
-        takButton.setOnClickListener(this);
-
-        //
-
         backButton.setOnClickListener(this);
         calenderPopUpButton.setOnClickListener(this);
         OKButton.setOnClickListener(this);
+
+        //임시 버튼임
         Button namdoB = findViewById(R.id.namdoButton);
         namdoB.setOnClickListener(this);
         Button buttonT = findViewById(R.id.geontakButton);
         buttonT.setOnClickListener(this);
+        //
 
         try {
             setDataList(dataSet);
@@ -75,10 +69,10 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
         startSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {//출발지 선택
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                InputManager inputManager = TAS.getInputManager();
                 Spinner startingSpinner = findViewById(R.id.departSpinner);
                 String departPlace = String.valueOf(startingSpinner.getItemAtPosition(position));
-                inputManager.setDepartPlace(dataSet.get(departPlace));
+                userInputData.setDepartPlaceID(dataSet.get(departPlace));
+                userInputData.setDepartPlaceName(departPlace);
             }
 
             @Override
@@ -89,10 +83,9 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
         endSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {//도착지 선택
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                InputManager inputManager = TAS.getInputManager();
                 Spinner endSpinner = findViewById(R.id.arrivalSpinner);
                 String arrivalPlace = String.valueOf(endSpinner.getItemAtPosition(position));
-                inputManager.setArrivalPlace(dataSet.get(arrivalPlace));
+                userInputData.setArrivalPlaceID(dataSet.get(arrivalPlace));
             }
 
             @Override
@@ -116,8 +109,7 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         date = (i + "-" + (i1+1) + "-" + i2);
-                        InputManager inputManager = TAS.getInputManager();
-                        inputManager.setDate(date);//데이터 삽입
+                        userInputData.setDate(date);//데이터 삽입
                     }
                 };
                 String year = String.valueOf(cal.get(Calendar.YEAR));
@@ -127,8 +119,7 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                 datePickerDialog.show();
                 break;
             case R.id.trainOKButton:
-                InputManager inputManager = TAS.getInputManager();
-                Date selectedDate = inputManager.getDate();//선택한 시간
+                Date selectedDate = userInputData.getDate();//선택한 시간
                 Date currentDate =  new Date();
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 if(date == null)
@@ -150,9 +141,9 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
                         if(networkInfo !=null)
                         {
-                            InputManager temp = TAS.getInputManager();
+
                             Intent listIntent = new Intent(getApplicationContext(),ListActivity.class);
-                            listIntent.putExtra("IM",temp);
+                            listIntent.putExtra("userInputData",userInputData);
                             listIntent.putExtra("searchMode",1);
                             startActivity(listIntent);
                         }
