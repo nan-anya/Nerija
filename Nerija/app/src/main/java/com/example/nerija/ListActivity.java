@@ -135,7 +135,7 @@ public class ListActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int id)
             {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
-                Intent temp2 = new Intent(getApplicationContext(),namdoActivity.class);
+                Intent temp2 = new Intent(getApplicationContext(),endActivity.class);
                 temp2.putExtra("goto",alarmBaseData.departPlaceName);
                 Alarm alarm = new Alarm();
 
@@ -152,6 +152,7 @@ public class ListActivity extends AppCompatActivity
                 notificationManager.notify(1, builder.build());
                 alarmBaseData.date = new Date();
                 alarm.StartAlarm(getApplicationContext(),temp2,alarmBaseData);
+
                 Toast.makeText(getApplicationContext(),"알람 등록",Toast.LENGTH_SHORT).show();
 
             }

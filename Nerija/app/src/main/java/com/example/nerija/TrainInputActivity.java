@@ -159,8 +159,6 @@ public class TrainInputActivity extends AppCompatActivity implements View.OnClic
                 startActivity(temp1);
                 break;
             case R.id.namdoButton:
-                Intent temp2 = new Intent(getApplicationContext(),namdoActivity.class);
-                startActivity(temp2);
 
         }
     }

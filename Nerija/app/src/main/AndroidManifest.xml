@@ -25,12 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".endActivity"/>
         <activity android:name=".TrainInputActivity" />
         <activity android:name=".IntercityInputActivity" />
         <activity android:name=".ListActivity" />
         <activity android:name=".PopupActivity" />
         <activity android:name=".geontakActivity" />
-        <activity android:name=".namdoActivity" />
         <activity android:name=".JActivity" />
         <activity android:name=".phoneNumActivity"/>
     </application>
