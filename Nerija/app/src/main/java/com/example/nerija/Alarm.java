@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class Alarm extends Thread implements Serializable {
 
-
+    boolean stop = false;
 
     public void StartAlarm(final Context app, final Intent intent, final AlarmBaseData alarmBaseData){ // TextView는 화면에 띄워서 결과 확인하기 위한 선언; 나중에 제거하기
         final Vibrator vib = (Vibrator) app.getSystemService(Context.VIBRATOR_SERVICE);
@@ -34,9 +34,9 @@ public class Alarm extends Thread implements Serializable {
             @Override
             public void run() {
 
-                while(!isInterrupted()){
+                while(!stop){
                     try{
-                        Thread.sleep(30000); // 30초 동안 쓰레드 정지;
+                        Thread.sleep(1000); // 30초 동안 쓰레드 정지;
                     }
                     catch(InterruptedException e){
 
@@ -61,22 +61,33 @@ public class Alarm extends Thread implements Serializable {
         long[] pattern = {1000,1000};   // 1초 진동, 1초 대기
         coord currentLoc = lc.getCurrentLoc();
         coord arrivalLoc = lc.locToCoord(alarmBaseData.getArrivalPlaceName());
-        double distance = lc.distance(currentLoc,arrivalLoc);
-        Toast.makeText(app,"It's runnig",Toast.LENGTH_SHORT).show();
+        double distance = 10000;
 
-        if((min <= 5) && (distance<=3000)){
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            app.startActivity(intent);
-            vib.vibrate(pattern,0);
-            if(!alarmBaseData.phoneNum.equals("")){
-                msgMng.transmitMessage(alarmBaseData.phoneNum);
-            }
-            Thread.interrupted();
+        if(currentLoc != null || arrivalLoc != null){
+            distance = lc.distance(currentLoc,arrivalLoc);
+        }
+
+        Toast.makeText(app,""+min,Toast.LENGTH_SHORT).show();
+        if(stop == true){
+            return;
         }
 
         if(min <= -20){
-            Thread.interrupted();
+            stop = true;
+            return;
         }
+
+        if((min <= 5.0) && (distance<=3000)){
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            app.startActivity(intent);
+            vib.vibrate(pattern,0);
+//            if(!alarmBaseData.phoneNum.equals("")){
+//                msgMng.transmitMessage(alarmBaseData.phoneNum);
+//            }
+            stop = true;
+        }
+
+
 
     }
 }

@@ -20,18 +20,18 @@ public class geontakActivity extends AppCompatActivity{
         setContentView(R.layout.activity_tak_temp);
         Alarm alarm = new Alarm();
         AlarmBaseData alarmBaseData = new AlarmBaseData();
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         Intent intent = new Intent(getApplicationContext(),endActivity.class);
         Date date = null;
         try {
-            date = sdf.parse("14:30");
+            date = sdf.parse("2019-12-05 20:54");
         } catch (ParseException e) {
             e.printStackTrace();
         }
         alarmBaseData.setDate(date);
         alarmBaseData.setPhoneNum("01062221447");
         alarmBaseData.setReciverName("남도훈");
-        alarmBaseData.setArrivalPlaceName("구미");
+        alarmBaseData.setArrivalPlaceName("창원중앙역");
         alarm.StartAlarm(getApplicationContext(),intent,alarmBaseData);
     }
 

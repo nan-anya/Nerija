@@ -91,17 +91,16 @@ public class LocationChecker
     {
         try
         {
+            if(LocationManager.GPS_PROVIDER == null){
+                return null;
+            }
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
             return new coord(location.getLatitude(), location.getLongitude());
         }
         catch (SecurityException e)
         {
-            if ( Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission( appContext, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED )
-            {
-                Toast.makeText(appContext,"권한이 설정되지 않았습니다.",Toast.LENGTH_SHORT);
-                android.os.Process.killProcess(android.os.Process.myPid());
-            }
+
         }
 
         return null;
