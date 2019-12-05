@@ -76,13 +76,13 @@ public class phoneNumActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
 
                 Intent temp2 = new Intent(getApplicationContext(),endActivity.class);
-                temp2.putExtra("goto",alarmBaseData.departPlaceName);
+                temp2.putExtra("goto",alarmBaseData.getArrivalPlaceName());
                 Alarm alarm = new Alarm();
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "default");
 
                 builder.setSmallIcon(R.mipmap.ic_launcher);
-                builder.setContentTitle("내리자 - "+ alarmBaseData.departPlaceName);
+                builder.setContentTitle("내리자 - "+ alarmBaseData.getArrivalPlaceName());
 
                 builder.setContentText(sdf.format(alarmBaseData.date) + "도착 5분전 알람");
                 // 알림 표시

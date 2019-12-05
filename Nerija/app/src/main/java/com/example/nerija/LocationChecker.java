@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -22,13 +23,10 @@ public class LocationChecker
 
     Context appContext;
 
-    Activity activity;
 
-    public LocationChecker(Activity activity)
+    public LocationChecker(Context context)
     {
-        appContext = activity.getApplicationContext();
-
-        this.activity = activity;
+        appContext = context;
 
         lm = (LocationManager) appContext.getSystemService(Context.LOCATION_SERVICE);
     }
@@ -64,7 +62,7 @@ public class LocationChecker
         return null;
     }
 
-    private double distance(coord coord1, coord coord2)
+    public double distance(coord coord1, coord coord2)
     {
         double theta = coord1.longtitude - coord2.longtitude;
 
@@ -101,7 +99,8 @@ public class LocationChecker
         {
             if ( Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission( appContext, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED )
             {
-                ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+                Toast.makeText(appContext,"권한이 설정되지 않았습니다.",Toast.LENGTH_SHORT);
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
         }
 

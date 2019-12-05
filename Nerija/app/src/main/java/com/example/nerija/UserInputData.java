@@ -6,10 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserInputData implements Serializable {
-    String departPlaceID;
-    String departPlaceName;
-    String arrivalPlaceID;
-    Date date;
+    private String departPlaceID;
+    private String departPlaceName;
+    private String arrivalPlaceID;
+    private Date date;
 
     private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,7 @@ class AlarmBaseData implements Serializable
 {
     Date date;
 
-    String departPlaceName;
+    String arrivalPlaceName;
 
     String phoneNum;
 
@@ -70,18 +70,18 @@ class AlarmBaseData implements Serializable
 
     public AlarmBaseData(){}
 
-    public AlarmBaseData(Date date, String departPlaceName)
+    public AlarmBaseData(Date date, String arrivalPlaceName)
     {
         this.date = new Date(date.getTime());
-        this.departPlaceName = departPlaceName;
+        this.arrivalPlaceName = arrivalPlaceName;
         this.phoneNum = "";
         this.reciverName = "";
     }
 
-    public AlarmBaseData(Date date, String departPlaceName, String phoneNum, String reciverName)
+    public AlarmBaseData(Date date, String arrivalPlaceName, String phoneNum, String reciverName)
     {
         this.date = new Date(date.getTime());
-        this.departPlaceName = departPlaceName;
+        this.arrivalPlaceName = arrivalPlaceName;
         this.phoneNum = phoneNum;
         this.reciverName = reciverName;
     }
@@ -110,11 +110,11 @@ class AlarmBaseData implements Serializable
         this.date = date;
     }
 
-    public String getDepartPlaceName() {
-        return departPlaceName;
+    public String getArrivalPlaceName() {
+        return arrivalPlaceName;
     }
 
-    public void setDepartPlaceName(String departPlaceName) {
-        this.departPlaceName = departPlaceName;
+    public void setArrivalPlaceName(String arrivalPlaceName) {
+        this.arrivalPlaceName = arrivalPlaceName;
     }
 }

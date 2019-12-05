@@ -77,7 +77,7 @@ public class ListActivity extends AppCompatActivity
                 if(!time.equals("선택할 수 있는 시간표가 존재하지 않습니다."));
                 {
                     Date selectedDate = dateParsing(depPlanDate,time);
-                    alarmBaseData = new AlarmBaseData(selectedDate, userInputData.departPlaceName);
+                    alarmBaseData = new AlarmBaseData(selectedDate, userInputData.getDepartPlaceName());
                     askUseMessageService(alarmBaseData);
                 }
             }
@@ -136,13 +136,13 @@ public class ListActivity extends AppCompatActivity
             {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
                 Intent temp2 = new Intent(getApplicationContext(),endActivity.class);
-                temp2.putExtra("goto",alarmBaseData.departPlaceName);
+                temp2.putExtra("goto",alarmBaseData.getArrivalPlaceName());
                 Alarm alarm = new Alarm();
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "default");
 
                 builder.setSmallIcon(R.mipmap.ic_launcher);
-                builder.setContentTitle("내리자 - "+ alarmBaseData.departPlaceName);
+                builder.setContentTitle("내리자 - "+ alarmBaseData.getArrivalPlaceName());
                 builder.setContentText(sdf.format(alarmBaseData.date) + " 도착 5분전 알람");
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -150,7 +150,7 @@ public class ListActivity extends AppCompatActivity
                     notificationManager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
                 }
                 notificationManager.notify(1, builder.build());
-                alarmBaseData.date = new Date();
+               // alarmBaseData.date = new Date();
                 alarm.StartAlarm(getApplicationContext(),temp2,alarmBaseData);
 
                 Toast.makeText(getApplicationContext(),"알람 등록",Toast.LENGTH_SHORT).show();
