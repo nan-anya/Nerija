@@ -60,7 +60,7 @@ public class IntercityInputActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         date = (i + "-" + (i1+1) + "-" + i2);
-                        userInputData.setDate(date);//데이터 삽입
+                        //userInputData.setDate(date);//데이터 삽입
                     }
                 };
                 String year = String.valueOf(cal.get(Calendar.YEAR));

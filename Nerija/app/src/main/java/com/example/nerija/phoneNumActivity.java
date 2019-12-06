@@ -15,27 +15,43 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class phoneNumActivity extends AppCompatActivity {
+public class phoneNumActivity extends AppCompatActivity
+{
+
+    AlarmBaseData alarmBaseData;
+
+    Button listBackButton;
+
+    ListView list;
+
+    AddressManager AM;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_num);
 
         Intent intent = getIntent();
-        final AlarmBaseData alarmBaseData = (AlarmBaseData) intent.getSerializableExtra("alarmBaseData");
+        alarmBaseData = (AlarmBaseData) intent.getSerializableExtra("alarmBaseData");
 
-        Button listBackButton = findViewById(R.id.listBack);
+        listBackButton = findViewById(R.id.listBack);
 
-        final ListView list = findViewById(R.id.list);
+        list = findViewById(R.id.list);
 
-        final AddressManager AM = new AddressManager(this);
+        AM = new AddressManager(this);
 
+        userSelect();
+    }
+
+    private void userSelect()
+    {
         ArrayList<NamePhoneNum> nps = AM.getNamePhoneNums();
 
         ArrayList<String> npss = AM.getAddressesString();
@@ -73,33 +89,42 @@ public class phoneNumActivity extends AppCompatActivity {
                     alarmBaseData.setPhoneNum(temp.getPhoneNum());
                 }
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
-
-                Intent temp2 = new Intent(getApplicationContext(),endActivity.class);
-                temp2.putExtra("goto",alarmBaseData.getArrivalPlaceName());
-                Alarm alarm = new Alarm();
-
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "default");
-
-                builder.setSmallIcon(R.mipmap.ic_launcher);
-                builder.setContentTitle("내리자 - "+ alarmBaseData.getArrivalPlaceName());
-
-                builder.setContentText(sdf.format(alarmBaseData.date) + "도착 5분전 알람");
-                // 알림 표시
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    notificationManager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
-                }
-
-                // id값은
-                // 정의해야하는 각 알림의 고유한 int값
-                notificationManager.notify(1, builder.build());
-                alarmBaseData.setDate(new Date());
-                alarm.StartAlarm(getApplicationContext(),temp2,alarmBaseData);
-                Toast.makeText(getApplicationContext(),"알람 등록",Toast.LENGTH_SHORT).show();
+                makeNotification();
+                makeAlarm(alarmBaseData);
             }
         });
+
+
     }
 
+    private void makeAlarm(AlarmBaseData alarmBaseData)
+    {
+        Intent intent = new Intent(getApplicationContext(),endActivity.class);
+        intent.putExtra("goto",alarmBaseData.getArrivalPlaceName());
 
+        Alarm alarm = new Alarm();
+        alarm.StartAlarm(getApplicationContext(), intent, alarmBaseData);
+        Toast.makeText(getApplicationContext(),"알람 등록",Toast.LENGTH_SHORT).show();
+        ActivityCompat.finishAffinity(this);
+    }
+
+    private void makeNotification()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "default");
+        builder.setOngoing(true);
+
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentTitle("내리자 - "+ alarmBaseData.getArrivalPlaceName());
+        builder.setContentText(sdf.format(alarmBaseData.date) + " 도착 5분전 알람");
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            notificationManager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
+        }
+        notificationManager.notify(1, builder.build());
+
+    }
 }

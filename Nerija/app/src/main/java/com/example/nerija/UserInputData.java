@@ -5,10 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UserInputData implements Serializable {
+public class UserInputData implements Serializable
+{
     private String departPlaceID;
-    private String departPlaceName;
     private String arrivalPlaceID;
+    private String arrivalPlaceName;
     private Date date;
 
     private static final long serialVersionUID = 1L;
@@ -33,12 +34,12 @@ public class UserInputData implements Serializable {
         return departPlaceID;
     }
 
-    public String getDepartPlaceName() {
-        return departPlaceName;
+    public String getArrivalPlaceName() {
+        return arrivalPlaceName;
     }
 
-    public void setDepartPlaceName(String departPlaceName) {
-        this.departPlaceName = departPlaceName;
+    public void setArrivalPlaceName(String arrivalPlaceName) {
+        this.arrivalPlaceName = arrivalPlaceName;
     }
 
     public Date getDate()
@@ -46,13 +47,9 @@ public class UserInputData implements Serializable {
         return date;
     }
 
-    public void setDate(String date)
+    public void setDate(Date date)
     {
-        try {
-            this.date = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+       this.date = new Date(date.getTime());
     }
 }
 

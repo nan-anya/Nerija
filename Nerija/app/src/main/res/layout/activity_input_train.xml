@@ -64,24 +64,5 @@
                 android:layout_weight="1"
                 android:text="@string/confirm"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="0.1">
-            <Button
-                android:id="@+id/geontakButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="이건탁"/>
-
-            <Button
-                android:id="@+id/namdoButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="남도훈"/>
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
